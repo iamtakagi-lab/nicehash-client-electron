@@ -153,7 +153,7 @@ async function setActivity() {
           "/s)"
         : 0) + ` ${powerUsage}W (${intensity.description})`
     }`,
-    state: `次回のお支払い ${nextPayout}`,
+    state: `次回のお支払い ${nextPayout} / 未払いマイニング報酬: ${rigs.unpaidAmount} BTC`,
     startTimestamp,
     largeImageKey: NICEHASH_LOGO_URL,
     largeImageText: DISCORD_RICH_PRESENCE_LARGE_IMAGE_TEXT,
