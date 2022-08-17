@@ -136,7 +136,7 @@ async function setActivity() {
   let duration = moment.duration(goal.diff(start), "milliseconds"); //差分をミリ秒で取得し、ミリ秒→durationへ変換
 
   // 参照: https://zenn.dev/captain_blue/articles/zero-padding-in-javascript
-  let time =
+  const nextPayout =
     duration.hours().toString().padStart(2, "0") +
     ":" +
     duration.minutes().toString().padStart(2, "0") +
@@ -153,7 +153,7 @@ async function setActivity() {
           "/s)"
         : 0) + ` ${powerUsage}W (${intensity.description})`
     }`,
-    state: `次回のお支払い ${time}`,
+    state: `次回のお支払い ${nextPayout}`,
     startTimestamp,
     largeImageKey: NICEHASH_LOGO_URL,
     largeImageText: DISCORD_RICH_PRESENCE_LARGE_IMAGE_TEXT,
