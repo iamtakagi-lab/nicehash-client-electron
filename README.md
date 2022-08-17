@@ -1,0 +1,4 @@
+# NiceHash
+
+## LICENSE
+MIT.
