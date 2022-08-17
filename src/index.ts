@@ -121,8 +121,8 @@ async function setActivity() {
 
   if (status.enumName !== "MINING")
     return rpc.setActivity({
-      details: `Device: ${name}`,
-      state: `Status: ${status}`,
+      details: `${name}`,
+      state: `${status.description}`,
       startTimestamp,
       largeImageKey: NICEHASH_LOGO_URL,
       largeImageText: DISCORD_RICH_PRESENCE_LARGE_IMAGE_TEXT,
