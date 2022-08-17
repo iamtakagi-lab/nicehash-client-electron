@@ -3,11 +3,11 @@ import { createHmac, randomBytes } from "crypto";
 import { Config } from "./config";
 import { stringify } from "querystring";
 
-const APP_NAME = "nicehash" as const;
+const APP_NAME = "Nicehash" as const;
 const APP_VERSION = "1.0.2" as const;
 const NICEHASH_API_HOST = "https://api2.nicehash.com" as const;
 const USER_AGENT =
-  `${APP_NAME}/${APP_VERSION} (+https://github.com/iamtakagi/nicehash)` as const;
+  `${APP_NAME}/${APP_VERSION} (+https://github.com/iamtakagi/Nicehash)` as const;
 
 
 export declare module NicehashRigs {
