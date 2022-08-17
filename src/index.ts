@@ -147,7 +147,7 @@ async function setActivity() {
   rpc.setActivity({
     details: `${name} (${
       (speeds[0]
-        ? Number(speeds[0].speed).toFixed(2) + 
+        ? Number(speeds[0].speed).toFixed(2) +
           " " +
           speeds[0].displaySuffix +
           "/s)"
