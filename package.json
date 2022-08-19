@@ -21,7 +21,6 @@
     "appId": "com.nicehash",
     "productName": "NiceHash",
     "files": [
-      "config.json",
       "dist/**/*"
     ],
     "mac": {
@@ -36,6 +35,7 @@
   "dependencies": {
     "axios": "^0.27.2",
     "discord-rpc": "^4.0.1",
+    "electron-store": "^8.1.0",
     "moment": "^2.29.4"
   },
   "devDependencies": {

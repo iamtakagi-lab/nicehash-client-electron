@@ -4,7 +4,7 @@ process.env.TZ = "Asia/Tokyo";
 
 import moment from "moment";
 import "moment/locale/ja";
-import { app, BrowserWindow } from "electron";
+import electron, { app, BrowserWindow } from "electron";
 import { Config, loadConfig } from "./config";
 import {
   DISCORD_RICH_PRESENCE_LARGE_IMAGE_TEXT,
@@ -28,11 +28,17 @@ async function init() {
   // Config 読み込み
   config = await loadConfig();
 
+  // Config 値チェック
+  if(!config.nicehash["apiKey"] || !config.nicehash["apiSecret"] || !config.nicehash["orgId"] || !config["gpuDeviceBrand"]) {
+    electron.dialog.showErrorBox("エラー", "NiceHash API Key 等を config.json に記述してください")
+    return process.exit(0)
+  }
+
   // Rigs 初期取得
   rigs = await getRigs(config["nicehash"]);
 
   // GPU Device 初期取得
-  gpuDecvice = await getGpuDevice(rigs);
+  gpuDecvice = await getGpuDevice(rigs, config["gpuDeviceBrand"]);
 
   // Rigs 1分毎に取得するタスク
   setInterval(async () => {
@@ -42,7 +48,7 @@ async function init() {
     rigs = await getRigs(config["nicehash"]);
 
     // GPU Device 取得
-    gpuDecvice = await getGpuDevice(rigs);
+    gpuDecvice = await getGpuDevice(rigs, config["gpuDeviceBrand"]);
   }, 1000 * 60);
 }
 
@@ -98,13 +104,13 @@ app.on("activate", () => {
   }
 });
 
-async function getGpuDevice(rigs: NicehashRigs.RootObject) {
+async function getGpuDevice(rigs: NicehashRigs.RootObject, gpuDeviceBrand: Config["gpuDeviceBrand"]) {
   const gpuDevice = await new Promise<NicehashRigs.Device>((resolve) =>
     rigs.miningRigs.map((rig) => {
       resolve(
         rig.devices.filter(
           (device) =>
-            device.deviceType.enumName === "NVIDIA" &&
+            device.deviceType.enumName === gpuDeviceBrand &&
             device.status.enumName !== "DISABLED"
         )[0]
       );

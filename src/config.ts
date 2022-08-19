@@ -1,5 +1,4 @@
-import path from "path";
-import fs from "fs";
+import Store from "electron-store";
 
 export interface Config {
   nicehash: {
@@ -7,19 +6,29 @@ export interface Config {
     apiSecret: string;
     orgId: string;
   }
-}
+  gpuDeviceBrand: "NVIDIA" | "AMD"
+};
 
 export function loadConfig() {
+  const store = new Store<Config>({
+    defaults: {
+      nicehash: {
+        apiKey: "",
+        apiSecret: "",
+        orgId: "",
+      },
+      gpuDeviceBrand: "NVIDIA"
+    }
+  })
   return new Promise<Config>((resolve) => {
-    Promise.resolve(
-      JSON.parse(
-        fs.readFileSync(
-          path.resolve(__dirname, "..", "config.json"),
-          "utf8"
-        )
-      )
-    ).then((read) => {
-      resolve(read);
-    });
-  });
+    resolve({
+        nicehash: {
+          apiKey: store.get("nicehash.apiKey"),
+          apiSecret: store.get("nicehash.apiSecret"),
+          orgId: store.get("nicehash.orgId"),
+        },
+        gpuDeviceBrand: store.get("gpuDeviceBrand"),
+      }
+    )
+  })
 }
