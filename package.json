@@ -1,6 +1,7 @@
 {
-  "name": "nichash",
-  "version": "1.0.4",
+  "name": "nicehash",
+  "productName": "NiceHash",
+  "version": "1.0.5",
   "main": "dist/main.js",
   "author": "iamtakagi",
   "license": "MIT",

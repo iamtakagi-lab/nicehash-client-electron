@@ -15,14 +15,12 @@ import {
 import { getRigs, NicehashRigs } from "./nicehashApi";
 import { RPC } from "./rpcLoader";
 
-let mainWindow: BrowserWindow | null;
-
-let rpc: RPC.Client | null;
+let mainWindow: BrowserWindow | undefined;
+let rpc: RPC.Client | undefined;
 let startTimestamp: number;
-
-let config: Config | null;
-let rigs: NicehashRigs.RootObject | null;
-let gpuDecvice: NicehashRigs.Device | null;
+let config: Config | undefined;
+let rigs: NicehashRigs.RootObject | undefined;
+let gpuDecvice: NicehashRigs.Device | undefined;
 
 async function init() {
   // Config 読み込み
@@ -49,7 +47,7 @@ async function init() {
 
     // GPU Device 取得
     gpuDecvice = await getGpuDevice(rigs, config["gpuDeviceBrand"]);
-  }, 1000 * 60);
+  }, 1000 * 30);
 }
 
 function createMainWindow() {
@@ -83,7 +81,7 @@ function createMainWindow() {
   });
 
   mainWindow.on("closed", () => {
-    mainWindow = null;
+    mainWindow = undefined;
   });
 }
 
@@ -99,7 +97,7 @@ app.on("window-all-closed", () => {
 });
 
 app.on("activate", () => {
-  if (mainWindow === null) {
+  if (!mainWindow) {
     createMainWindow();
   }
 });
